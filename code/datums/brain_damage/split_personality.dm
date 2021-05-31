@@ -58,19 +58,25 @@
 	QDEL_NULL(owner_backseat)
 	..()
 
-/datum/brain_trauma/severe/split_personality/proc/switch_personalities()
+/datum/brain_trauma/severe/split_personality/proc/switch_personalities(forced_switch)
 	if(QDELETED(owner) || QDELETED(stranger_backseat) || QDELETED(owner_backseat))
 		return
 
 	var/mob/living/split_personality/current_backseat
-	var/mob/living/split_personality/free_backseat
-	if(current_controller == OWNER)
+	var/mob/living/split_personality/new_backseat
+	var/switch_controller_to
+	if(is_null(forced_switch))
+		switch_controller_to = !(current_controller)
+	else
+		switch_controller_to = forced_switch
+
+	if(switch_controller_to == STRANGER)
 		current_backseat = stranger_backseat
-		free_backseat = owner_backseat
+		new_backseat = owner_backseat
 	else
 		current_backseat = owner_backseat
-		free_backseat = stranger_backseat
-
+		new_backseat = stranger_backseat
+	
 	if(!current_backseat.client) //Make sure we never switch to a logged off mob.
 		return
 
@@ -85,18 +91,18 @@
 	owner.computer_id = null
 	owner.lastKnownIP = null
 
-	free_backseat.ckey = owner.ckey
+	new_backseat.ckey = owner.ckey
 
-	free_backseat.name = owner.name
+	new_backseat.name = owner.name
 
 	if(owner.mind)
-		free_backseat.mind = owner.mind
+		new_backseat.mind = owner.mind
 
-	if(!free_backseat.computer_id)
-		free_backseat.computer_id = h2b_id
+	if(!new_backseat.computer_id)
+		new_backseat.computer_id = h2b_id
 
-	if(!free_backseat.lastKnownIP)
-		free_backseat.lastKnownIP = h2b_ip
+	if(!new_backseat.lastKnownIP)
+		new_backseat.lastKnownIP = h2b_ip
 
 	//Backseat to body
 
