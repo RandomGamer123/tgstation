@@ -45,7 +45,7 @@
 /datum/brain_trauma/severe/split_personality/on_life(delta_time, times_fired)
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
-			switch_personalities()
+			switch_personalities(OWNER)
 		qdel(src)
 	else if(DT_PROB(1.5, delta_time))
 		switch_personalities()
@@ -53,7 +53,7 @@
 
 /datum/brain_trauma/severe/split_personality/on_lose()
 	if(current_controller != OWNER) //it would be funny to cure a guy only to be left with the other personality, but it seems too cruel
-		switch_personalities()
+		switch_personalities(OWNER)
 	QDEL_NULL(stranger_backseat)
 	QDEL_NULL(owner_backseat)
 	..()
@@ -142,7 +142,7 @@
 		qdel(src) //in case trauma deletion doesn't already do it
 
 	if((body.stat == DEAD && trauma.owner_backseat == src))
-		trauma.switch_personalities()
+		trauma.switch_personalities(OWNER) 
 		qdel(trauma)
 
 	//if one of the two ghosts, the other one stays permanently
