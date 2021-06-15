@@ -52,7 +52,10 @@
 		aicamera.camera_mode_off()
 		aicamera.captureimage(A, usr)
 		return
-
+	
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED)) // for humans this calls UnarmedAttack, however that does nothing for borgs
+		return
+	
 	var/obj/item/W = get_active_held_item()
 
 	if(!W && get_dist(src,A) <= interaction_range)
