@@ -103,6 +103,11 @@
 
 /obj/machinery/atmospherics/components/tank/Destroy()
 	QUEUE_SMOOTH_NEIGHBORS(src)
+	disconnect()
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
+	var/datum/gas_mixture/expelled_gas = air_contents.total_moles()/length(merge_group.members) // don't actually remove it here as RemoveMember of the merger datum will handle that in MergerRefreshComplete
+	var/turf/T = get_turf(src)
+	T.assume_air(expelled_gas)
 	return ..()
 
 /obj/machinery/atmospherics/components/tank/examine(mob/user, thats)
