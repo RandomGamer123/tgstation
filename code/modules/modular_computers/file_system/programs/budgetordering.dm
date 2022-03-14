@@ -186,8 +186,7 @@
 				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
-			var/id = text2path(params["id"])
-			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
+			var/datum/supply_pack/pack = SSshuttle.supply_packs[params["id"]]
 			if(!istype(pack))
 				return
 			if(pack.hidden || pack.contraband || pack.DropPodOnly || (pack.special && !pack.special_enabled))

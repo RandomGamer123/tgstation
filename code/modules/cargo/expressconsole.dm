@@ -165,7 +165,7 @@
 				return
 			var/id = params["id"]
 			id = text2path(id) || id
-			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
+			var/datum/supply_pack/pack = SSshuttle.supply_packs[params["id"]]
 			if(!istype(pack))
 				CRASH("Unknown supply pack id given by express order console ui. ID: [params["id"]]")
 			var/name = "*None Provided*"
