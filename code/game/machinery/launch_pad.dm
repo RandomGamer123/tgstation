@@ -231,7 +231,6 @@
 	icon_teleport = "blpad-beam"
 	anchored = FALSE
 	use_power = NO_POWER_USE
-	active_power_usage = 0
 	teleport_speed = 20
 	range = 8
 	stationary = FALSE
@@ -255,9 +254,7 @@
 /obj/machinery/launchpad/briefcase/isAvailable()
 	if(closed)
 		return FALSE
-	if(panel_open)
-		return FALSE
-	return TRUE
+	return ..()
 
 /obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
 	. = ..()
